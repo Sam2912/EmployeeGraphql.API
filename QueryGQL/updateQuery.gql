@@ -1,0 +1,29 @@
+{
+  "input": {
+    "id":6,
+    "name": "Sam update",
+    "department": "IT",
+    "salary": 8000,
+    "status": "ACTIVE",
+    "type": "PART_TIME"
+  }
+}
+
+mutation UpdateEmployee($input: EmployeeUpdateInput!) {
+  updateEmployee(input: $input) {
+    ... on IEmployee {
+      id
+      name
+      department
+      status
+    }
+    ... on FullTimeEmployeeType {
+      salary
+      type
+    }
+    ... on PartTimeEmployeeType {
+      hourlyRate
+      type
+    }
+  }
+}

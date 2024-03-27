@@ -20,7 +20,7 @@ namespace EmployeeGraphql.API.Mutation
                 {
                     employee = new FullTimeEmployee()
                     {
-                        Id=input.Id,
+                        Id = input.Id,
                         Name = input.Name,
                         Status = input.Status,
                         Department = input.Department,
@@ -31,7 +31,7 @@ namespace EmployeeGraphql.API.Mutation
                 {
                     employee = new PartTimeEmployee()
                     {
-                        Id=input.Id,
+                        Id = input.Id,
                         Name = input.Name,
                         Status = input.Status,
                         Department = input.Department,
@@ -42,8 +42,44 @@ namespace EmployeeGraphql.API.Mutation
                 IEmployee employee1 = employeeService.AddEmployee(employee);
 
                 return employee1;
-            
-        });
+
+            });
+
+            Field<IEmployeeType>("updateEmployee")
+                .Argument<NonNullGraphType<EmployeeUpdateInput>>("input")
+                .Resolve(resolve: context =>
+                {
+                    var input = context.GetArgument<EmployeeUpdateDto>("input");
+                    IEmployee employee = null;
+                    if (input.Type == EmployeeTypeEnum.FullTime)
+                    {
+                        employee = new FullTimeEmployee()
+                        {
+                            Id = input.Id,
+                            Name = input.Name,
+                            Status = input.Status,
+                            Department = input.Department,
+                            Salary = input.Salary ?? 0
+                        };
+                    }
+                    else if (input.Type == EmployeeTypeEnum.PartTime)
+                    {
+                        employee = new PartTimeEmployee()
+                        {
+                            Id = input.Id,
+                            Name = input.Name,
+                            Status = input.Status,
+                            Department = input.Department,
+                            HourlyRate = input.HourlyRate ?? 0
+                        };
+                    }
+
+                    IEmployee employee1 = employeeService.UpdateEmployee(employee);
+
+                    return employee1;
+
+                });
+
         }
-}
+    }
 }

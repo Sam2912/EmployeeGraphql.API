@@ -8,5 +8,6 @@ namespace EmployeeGraphql.API.Services
         IEnumerable<IEmployee> GetEmployeeByDeptStatus(Department dept, Status status);
         IEnumerable<IEmployee> GetEmployees();
         IEmployee AddEmployee(IEmployee employee);
+        IEmployee UpdateEmployee(IEmployee employee);
     }
 }

@@ -48,6 +48,12 @@ namespace EmployeeGraphql.API.Services
             return employee;
         }
 
+        public IEmployee UpdateEmployee(IEmployee employee)
+        {
+            _employees.Remove(employee);
+            return AddEmployee(employee);
+        }
+
         public IEnumerable<IEmployee> GetEmployeeByDeptStatus(Department dept, Status status)
         {
             return _employees.Where(x => x.Department == dept && x.Status == status);
@@ -61,6 +67,8 @@ namespace EmployeeGraphql.API.Services
         {
             return _employees;
         }
+
+
     }
 
 }
