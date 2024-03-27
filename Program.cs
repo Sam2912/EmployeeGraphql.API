@@ -1,4 +1,5 @@
 using EmployeeGraphql.API;
+using EmployeeGraphql.API.Mutation;
 using EmployeeGraphql.API.Schema;
 using EmployeeGraphql.API.Services;
 using GraphQL;
@@ -10,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<IEmployeeService, EmployeeService>();
 // builder.Services.AddSingleton<EmployeeDetailsType>();
 builder.Services.AddSingleton<EmployeeQuery>();
+builder.Services.AddSingleton<EmployeeMutation>();
 builder.Services.AddSingleton<ISchema, EmployeeSchema>();
 builder.Services.AddGraphQL(b => b
     //.AddAutoSchema<EmployeeQuery>()  // schema

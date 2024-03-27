@@ -12,8 +12,9 @@ namespace EmployeeGraphql.API.Types
             Field(e => e.HourlyRate);
             Field(e => e.Department, type: typeof(DepartmentEnumType));
             Field<StatusEnumType>("status")
-            .Resolve( context => context.Source.Status);
-            Interface<EmployeeType>();
+            .Resolve(context => context.Source.Status);
+            Field(e => e.Type);
+            Interface<IEmployeeType>();
         }
     }
 

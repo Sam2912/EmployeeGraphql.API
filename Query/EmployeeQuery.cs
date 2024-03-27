@@ -36,7 +36,7 @@ namespace EmployeeGraphql.API
                 return employeeService.GetEmployees();
             });
 
-            Field<ListGraphType<EmployeeType>>("employeesWithInterface")
+            Field<ListGraphType<IEmployeeType>>("employeesWithInterface")
            .Resolve(context =>
             {
                 return employeeService.GetEmployees();

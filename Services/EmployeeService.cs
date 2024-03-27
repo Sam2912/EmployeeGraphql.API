@@ -1,19 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using EmployeeGraphql.API.Models;
 
 namespace EmployeeGraphql.API.Services
 {
     public class EmployeeService : IEmployeeService
     {
-        private readonly List<Employee> _employees;
+        private List<IEmployee> _employees;
 
         public EmployeeService()
         {
             // Initialize employees (FullTimeEmployee and PartTimeEmployee instances)
-            _employees = new List<Employee>();
+            _employees = new List<IEmployee>();
             _employees.Add(new FullTimeEmployee
             {
                 Id = 1,
@@ -46,17 +42,22 @@ namespace EmployeeGraphql.API.Services
             });
         }
 
-        public IEnumerable<Employee> GetEmployeeByDeptStatus(Department dept, Status status)
+        public IEmployee AddEmployee(IEmployee employee)
+        {
+            _employees.Add(employee);
+            return employee;
+        }
+
+        public IEnumerable<IEmployee> GetEmployeeByDeptStatus(Department dept, Status status)
         {
             return _employees.Where(x => x.Department == dept && x.Status == status);
         }
 
-        public Employee? GetEmployeeById(int id)
+        public IEmployee? GetEmployeeById(int id)
         {
             return _employees.FirstOrDefault(x => x.Id == id);
         }
-
-        public IEnumerable<Employee> GetEmployees()
+        public IEnumerable<IEmployee> GetEmployees()
         {
             return _employees;
         }

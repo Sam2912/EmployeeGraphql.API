@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace EmployeeGraphql.API.Models
 {
 
@@ -19,6 +14,12 @@ namespace EmployeeGraphql.API.Models
     {
         Active,
         Inactive
+    }
+
+    public enum EmployeeTypeEnum
+    {
+        FullTime,
+        PartTime
     }
 
     public abstract class Employee : IEmployee

@@ -4,8 +4,9 @@ namespace EmployeeGraphql.API.Services
 {
     public interface IEmployeeService
     {
-        Employee? GetEmployeeById(int id);
-        IEnumerable<Employee> GetEmployeeByDeptStatus(Department dept, Status status);
-        IEnumerable<Employee> GetEmployees();
+        IEmployee? GetEmployeeById(int id);
+        IEnumerable<IEmployee> GetEmployeeByDeptStatus(Department dept, Status status);
+        IEnumerable<IEmployee> GetEmployees();
+        IEmployee AddEmployee(IEmployee employee);
     }
 }
