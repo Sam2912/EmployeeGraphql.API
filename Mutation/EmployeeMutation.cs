@@ -80,6 +80,15 @@ namespace EmployeeGraphql.API.Mutation
 
                 });
 
+            Field<IEmployeeType>("deleteEmployee")
+                      .Argument<NonNullGraphType<IntGraphType>>("employeeId")
+                      .Resolve(resolve: context =>
+                      {
+                          var employeeId = context.GetArgument<int>("employeeId");
+                          IEmployee employee1 = employeeService.DeleteEmployee(employeeId);
+                          return employee1;
+                      });
+
         }
     }
 }

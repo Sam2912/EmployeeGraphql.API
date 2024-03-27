@@ -9,5 +9,6 @@ namespace EmployeeGraphql.API.Services
         IEnumerable<IEmployee> GetEmployees();
         IEmployee AddEmployee(IEmployee employee);
         IEmployee UpdateEmployee(IEmployee employee);
+        IEmployee? DeleteEmployee(int employeeId);
     }
 }

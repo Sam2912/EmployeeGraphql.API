@@ -1,0 +1,22 @@
+{
+    "employeeId":2
+}
+
+mutation DeleteEmployee($employeeId: Int!) {
+  deleteEmployee(employeeId: $employeeId) {
+    ... on IEmployee {
+      id
+      name
+      department
+      status
+    }
+    ... on FullTimeEmployeeType {
+      salary
+      type
+    }
+    ... on PartTimeEmployeeType {
+      hourlyRate
+      type
+    }
+  }
+}

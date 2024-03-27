@@ -42,18 +42,6 @@ namespace EmployeeGraphql.API.Services
             });
         }
 
-        public IEmployee AddEmployee(IEmployee employee)
-        {
-            _employees.Add(employee);
-            return employee;
-        }
-
-        public IEmployee UpdateEmployee(IEmployee employee)
-        {
-            _employees.Remove(employee);
-            return AddEmployee(employee);
-        }
-
         public IEnumerable<IEmployee> GetEmployeeByDeptStatus(Department dept, Status status)
         {
             return _employees.Where(x => x.Department == dept && x.Status == status);
@@ -68,7 +56,28 @@ namespace EmployeeGraphql.API.Services
             return _employees;
         }
 
+        public IEmployee AddEmployee(IEmployee employee)
+        {
+            _employees.Add(employee);
+            return employee;
+        }
 
+        public IEmployee UpdateEmployee(IEmployee employee)
+        {
+            _employees.Remove(employee);
+            return AddEmployee(employee);
+        }
+
+        public IEmployee? DeleteEmployee(int employeeId)
+        {
+            IEmployee? employee = _employees.FirstOrDefault(x => x.Id == employeeId);
+            if (employee is not null)
+            {
+                _employees.Remove(employee);
+                return employee;
+            }
+            return null;
+        }
     }
 
 }
