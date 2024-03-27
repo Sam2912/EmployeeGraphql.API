@@ -116,3 +116,37 @@ fragment EmployeeDetails on Employee {
   }
 }
 
+---------
+Interface
+---------
+{
+  emp1:employeesWithInterface {
+    id
+    name
+    department
+    status
+    __typename
+    ... on FullTimeEmployeeType {
+      salary
+    }
+    ... on PartTimeEmployeeType {
+      hourlyRate
+    }
+  }
+  
+  emp2:employees{
+    ...on IEmployee{
+      id
+      name
+      status
+    }
+    ... on FullTimeEmployeeType {
+      salary
+    }
+    ... on PartTimeEmployeeType {
+      hourlyRate
+    }
+        __typename
+  }
+}
+

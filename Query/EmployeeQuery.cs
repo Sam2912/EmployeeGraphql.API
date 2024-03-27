@@ -32,9 +32,15 @@ namespace EmployeeGraphql.API
 
             Field<ListGraphType<EmployeeUnion>>("employees")
             .Resolve(context =>
-           {
-               return employeeService.GetEmployees();
-           });
+            {
+                return employeeService.GetEmployees();
+            });
+
+            Field<ListGraphType<EmployeeType>>("employeesWithInterface")
+           .Resolve(context =>
+            {
+                return employeeService.GetEmployees();
+            });
         }
     }
 

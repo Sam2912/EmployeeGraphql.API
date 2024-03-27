@@ -7,9 +7,9 @@ using GraphQL.Types;
 
 namespace EmployeeGraphql.API.Types
 {
-    public class IEmployeeInterface : InterfaceGraphType<IEmployee>
+    public class EmployeeType : InterfaceGraphType<IEmployee>
     {
-        public IEmployeeInterface()
+        public EmployeeType()
         {
             Name = "IEmployee";
             Field(e => e.Id);
