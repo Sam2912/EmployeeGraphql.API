@@ -1,0 +1,88 @@
+{
+  "format": 1,
+  "restore": {
+    "c:\\Laxman\\Practise\\EmployeeGraphql.API\\EmployeeGraphql.API.csproj": {}
+  },
+  "projects": {
+    "c:\\Laxman\\Practise\\EmployeeGraphql.API\\EmployeeGraphql.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "c:\\Laxman\\Practise\\EmployeeGraphql.API\\EmployeeGraphql.API.csproj",
+        "projectName": "EmployeeGraphql.API",
+        "projectPath": "c:\\Laxman\\Practise\\EmployeeGraphql.API\\EmployeeGraphql.API.csproj",
+        "packagesPath": "C:\\Users\\laxch\\.nuget\\packages\\",
+        "outputPath": "c:\\Laxman\\Practise\\EmployeeGraphql.API\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\laxch\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "GraphQL": {
+              "target": "Package",
+              "version": "[7.8.0, )"
+            },
+            "GraphQL.Server.Transports.AspNetCore": {
+              "target": "Package",
+              "version": "[7.7.1, )"
+            },
+            "GraphQL.Server.Ui.Playground": {
+              "target": "Package",
+              "version": "[7.7.1, )"
+            },
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

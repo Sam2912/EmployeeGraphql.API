@@ -1,0 +1,118 @@
+# Write your query or mutation here
+{
+  "id":1
+}
+
+query GetEmployee($id: Int!) {
+  employee(id: $id) {
+    ... on FullTimeEmployeeType {
+      id
+      name
+      salary
+      __typename
+    }
+    ... on PartTimeEmployeeType {
+      id
+      name
+      hourlyRate
+      __typename
+    }
+  }
+}
+
+# Write your query or mutation here
+{
+  "id":1
+}
+
+query GetEmployee($id: Int!) {
+  employee(id: $id) {
+    ... on FullTimeEmployeeType {
+      id
+      name
+      salary
+      __typename
+    }
+    ... on PartTimeEmployeeType {
+      id
+      name
+      hourlyRate
+      __typename
+    }
+  }
+}
+
+{
+  "id":1
+}
+
+query GetEmployee($id: Int!) {
+  employee(id: $id) {
+    __typename
+    ... on IEmployee {
+      id
+      name
+    }
+    ... on FullTimeEmployeeType {
+      salary
+    }
+    ... on PartTimeEmployeeType {
+      hourlyRate
+    }
+  }
+}
+
+----------
+enum
+----------
+query GetEmployees{
+  employees {
+    __typename
+    ...EmployeeDetails
+  }
+}
+
+fragment EmployeeDetails on Employee {
+  ... on IEmployee {
+    id
+    name
+    department
+  }
+  ... on FullTimeEmployeeType {
+    salary
+  }
+  ... on PartTimeEmployeeType {
+    hourlyRate
+  }
+}
+
+---------
+params
+---------
+
+{
+  "dept":"HR",
+  "status": "ACTIVE"
+}
+
+query GetFilteredEmployee($dept: Department, $status: Status) {
+  filteredEmployee(dept: $dept, status: $status) {
+    __typename
+    ...EmployeeDetails
+  }
+}
+
+fragment EmployeeDetails on Employee {
+  ... on IEmployee {
+    id
+    name
+    department
+  }
+  ... on FullTimeEmployeeType {
+    salary
+  }
+  ... on PartTimeEmployeeType {
+    hourlyRate
+  }
+}
+
