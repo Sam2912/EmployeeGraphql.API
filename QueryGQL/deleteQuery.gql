@@ -1,9 +1,11 @@
 {
-    "employeeId":2
+  "delete": {
+     "employeeId":1
+  } 
 }
 
-mutation DeleteEmployee($employeeId: Int!) {
-  deleteEmployee(employeeId: $employeeId) {
+mutation DeleteEmployee($delete: EmployeeDeleteInput!) {
+  deleteEmployee(delete: $delete) {
     ... on IEmployee {
       id
       name

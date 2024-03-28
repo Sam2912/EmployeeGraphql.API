@@ -64,7 +64,7 @@ namespace EmployeeGraphql.API.Services
 
         public IEmployee UpdateEmployee(IEmployee employee)
         {
-            _employees.Remove(employee);
+            DeleteEmployee(employee.Id);
             return AddEmployee(employee);
         }
 

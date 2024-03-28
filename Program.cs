@@ -1,5 +1,7 @@
 using EmployeeGraphql.API;
+using EmployeeGraphql.API.Mapping;
 using EmployeeGraphql.API.Mutation;
+using EmployeeGraphql.API.Resolver;
 using EmployeeGraphql.API.Schema;
 using EmployeeGraphql.API.Services;
 using GraphQL;
@@ -8,11 +10,14 @@ using GraphQL.Types;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSingleton<IEmployeeResolver,EmployeeResolver>();
 builder.Services.AddSingleton<IEmployeeService, EmployeeService>();
-// builder.Services.AddSingleton<EmployeeDetailsType>();
 builder.Services.AddSingleton<EmployeeQuery>();
 builder.Services.AddSingleton<EmployeeMutation>();
 builder.Services.AddSingleton<ISchema, EmployeeSchema>();
+ builder.Services.AddAutoMapper(typeof(MappingProfile)); // Add AutoMapper
+
+
 builder.Services.AddGraphQL(b => b
     //.AddAutoSchema<EmployeeQuery>()  // schema
     .AddGraphTypes()

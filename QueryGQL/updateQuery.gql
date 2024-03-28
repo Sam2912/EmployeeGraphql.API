@@ -1,16 +1,18 @@
 {
-  "input": {
-    "id":6,
-    "name": "Sam update",
-    "department": "IT",
-    "salary": 8000,
-    "status": "ACTIVE",
-    "type": "PART_TIME"
+  "update": {
+    "fullTimeEmployeeInput": {
+        "id": 3,
+        "name": "Pahal update",
+        "department": "IT",
+        "status": "ACTIVE",
+        "salary": 3000,
+        "type": "FULL_TIME"
+    }
   }
 }
 
-mutation UpdateEmployee($input: EmployeeUpdateInput!) {
-  updateEmployee(input: $input) {
+mutation UpdateEmployee($update: EmployeeUpdateInput!) {
+  updateEmployee(update: $update) {
     ... on IEmployee {
       id
       name
