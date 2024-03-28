@@ -17,11 +17,13 @@ namespace EmployeeGraphql.API.Resolver
     {
         private readonly IEmployeeService employeeService;
         private readonly IMapper mapper;
+        private readonly IValidator<EmployeeInput> validator;
 
-        public EmployeeResolver(IEmployeeService employeeService, IMapper mapper)
+        public EmployeeResolver(IEmployeeService employeeService, IMapper mapper,IValidator<EmployeeInput> validator)
         {
             this.employeeService = employeeService;
             this.mapper = mapper;
+            this.validator = validator;
         }
 
         public async Task<IEmployee?> CreateEmployeeAsync(IResolveFieldContext<object> context)
@@ -30,7 +32,7 @@ namespace EmployeeGraphql.API.Resolver
             IEmployee employee = GetEmployee(input);
 
 
-            ValidationResult validationResult = await new EmployeeInputValidator().ValidateAsync(input);
+            ValidationResult validationResult = await this.validator.ValidateAsync(input);
             if (!validationResult.IsValid)
             {
                 foreach (var error in validationResult.Errors)
