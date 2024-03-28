@@ -1,16 +1,19 @@
 {
-  "input": {
-    "id":6,
-    "name": "Sam",
+  "create": {
+    "partTimeEmployeeInput": {
+    "id":7,
+    "name": "Sachin",
     "department": "IT",
-    "salary": 6000,
+    "hourlyRate": 7000,
     "status": "ACTIVE",
     "type": "FULL_TIME"
+    }
   }
 }
 
-mutation AddEmployee($input: EmployeeInput!) {
-  addEmployee(input: $input) {
+
+mutation AddEmployee($create: EmployeeInput!) {
+  addEmployee(create: $create) {
     ... on IEmployee {
       id
       name

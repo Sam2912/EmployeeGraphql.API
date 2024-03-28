@@ -11,38 +11,37 @@ namespace EmployeeGraphql.API.Mutation
         public EmployeeMutation(IEmployeeService employeeService)
         {
             Field<IEmployeeType>("addEmployee")
-            .Argument<NonNullGraphType<EmployeeInput>>("input")
+            .Argument<NonNullGraphType<EmployeeInput>>("create")
             .Resolve(resolve: context =>
             {
-                var input = context.GetArgument<EmployeeInputDto>("input");
-                IEmployee employee = null;
-                if (input.Type == EmployeeTypeEnum.FullTime)
-                {
+                var input = context.GetArgument<EmployeeInput>("create");
+                 IEmployee employee = null;
+                if(input.FullTimeEmployeeInput is not null){
                     employee = new FullTimeEmployee()
                     {
-                        Id = input.Id,
-                        Name = input.Name,
-                        Status = input.Status,
-                        Department = input.Department,
-                        Salary = input.Salary ?? 0
+                        Id = input.FullTimeEmployeeInput.Id,
+                        Name = input.FullTimeEmployeeInput.Name,
+                        Status = input.FullTimeEmployeeInput.Status,
+                        Department = input.FullTimeEmployeeInput.Department,
+                        Salary = input.FullTimeEmployeeInput.Salary
                     };
                 }
-                else if (input.Type == EmployeeTypeEnum.PartTime)
+                else if (input.PartTimeEmployeeInput is not null)
                 {
                     employee = new PartTimeEmployee()
                     {
-                        Id = input.Id,
-                        Name = input.Name,
-                        Status = input.Status,
-                        Department = input.Department,
-                        HourlyRate = input.Salary ?? 0
+                        Id = input.PartTimeEmployeeInput.Id,
+                        Name = input.PartTimeEmployeeInput.Name,
+                        Status = input.PartTimeEmployeeInput.Status,
+                        Department = input.PartTimeEmployeeInput.Department,
+                        HourlyRate = input.PartTimeEmployeeInput.HourlyRate
                     };
                 }
 
                 IEmployee employee1 = employeeService.AddEmployee(employee);
 
                 return employee1;
-
+                return null;
             });
 
             Field<IEmployeeType>("updateEmployee")
