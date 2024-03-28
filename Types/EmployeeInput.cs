@@ -3,7 +3,7 @@ using GraphQL.Types;
 
 namespace EmployeeGraphql.API.Types
 {
-    public class EmployeeInput : InputObjectGraphType
+    public class EmployeeInput : InputObjectGraphType, IEmployeeInput
     {
         public EmployeeInput()
         {

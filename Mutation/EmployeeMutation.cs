@@ -14,15 +14,13 @@ namespace EmployeeGraphql.API.Mutation
         {
             Field<IEmployeeType>("addEmployee")
             .Argument<NonNullGraphType<EmployeeInput>>("create")
-            .Resolve(resolve: context =>
-            {
-                return employeeResolver.CreateEmployee(context);
-            });
+            .ResolveAsync(resolve: async context => await employeeResolver.CreateEmployeeAsync(context));
 
             Field<IEmployeeType>("updateEmployee")
                 .Argument<NonNullGraphType<EmployeeUpdateInput>>("update")
                 .Resolve(resolve: context =>
                 {
+                     
                     return employeeResolver.UpdateEmployee(context);
                 });
 
