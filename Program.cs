@@ -19,6 +19,16 @@ builder.Services.AddSingleton<EmployeeMutation>();
 builder.Services.AddSingleton<ISchema, EmployeeSchema>();
 builder.Services.AddAutoMapper(typeof(MappingProfile)); // Add AutoMapper
 builder.Services.AddValidatorsFromAssemblyContaining<EmployeeInputValidator>(ServiceLifetime.Singleton);
+builder.Services.AddCors(options =>
+   {
+       options.AddPolicy("AllowSpecificOrigin",
+           builder =>
+           {
+               builder.WithOrigins("http://localhost:5173") // Replace with your allowed origin
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+           });
+   });
 
 builder.Services.AddGraphQL(b => b
     //.AddAutoSchema<EmployeeQuery>()  // schema
@@ -41,6 +51,7 @@ if (app.Environment.IsDevelopment())
 }
 
 //app.UseHttpsRedirection();
+ app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthorization();
 
