@@ -25,7 +25,7 @@ namespace EmployeeGraphql.API.Models
     public abstract class Employee : IEmployee
     {
 
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string? Name { get; set; }
         public Department Department { get; set; }
         public Status Status { get; set; }

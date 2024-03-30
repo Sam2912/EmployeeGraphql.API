@@ -11,10 +11,10 @@ namespace EmployeeGraphql.API
         public EmployeeQuery(IEmployeeService employeeService)
         {
             Field<EmployeeUnion>("employee")
-            .Argument<IntGraphType>("id")
+            .Argument<NonNullGraphType<GuidGraphType>>("id")
             .Resolve(resolve: context =>
                  {
-                     var id = context.GetArgument<int>("id");
+                     var id = context.GetArgument<Guid>("id");
                      return employeeService.GetEmployeeById(id);
                  });
 

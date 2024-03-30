@@ -10,8 +10,8 @@ namespace EmployeeGraphql.API.Types
     {
         public EmployeeDeleteInput()
         {
-            Field<IntGraphType>("employeeId");
+            Field<GuidGraphType>("employeeId");
         }
-        public int EmployeeId { get; set; }
+        public Guid EmployeeId { get; set; }
     }
 }

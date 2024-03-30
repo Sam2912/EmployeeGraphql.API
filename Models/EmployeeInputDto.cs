@@ -7,7 +7,7 @@ namespace EmployeeGraphql.API.Models
 {
     public class EmployeeInputDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string? Name { get; set; }
         public Department Department { get; set; }
         public Status Status { get; set; }

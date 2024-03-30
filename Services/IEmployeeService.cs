@@ -4,11 +4,11 @@ namespace EmployeeGraphql.API.Services
 {
     public interface IEmployeeService
     {
-        IEmployee? GetEmployeeById(int id);
+        IEmployee? GetEmployeeById(Guid id);
         IEnumerable<IEmployee> GetEmployeeByDeptStatus(Department dept, Status status);
         IEnumerable<IEmployee> GetEmployees();
         IEmployee AddEmployee(IEmployee employee);
         IEmployee UpdateEmployee(IEmployee employee);
-        IEmployee? DeleteEmployee(int employeeId);
+        IEmployee? DeleteEmployee(Guid employeeId);
     }
 }

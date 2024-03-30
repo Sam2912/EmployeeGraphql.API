@@ -1,7 +1,7 @@
 {
   "create": {
     "partTimeEmployeeInput": {
-    "id":7,
+    "id":"5b9fe307-cbef-469e-8f85-193eb596e0fa",
     "name": "Sachin",
     "department": "IT",
     "hourlyRate": 7000,

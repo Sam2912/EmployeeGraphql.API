@@ -1,7 +1,7 @@
 {
   "update": {
     "fullTimeEmployeeInput": {
-        "id": 3,
+        "id": "2bcd868d-27e8-4c03-afa8-9fffd2f4b295",
         "name": "Pahal update",
         "department": "IT",
         "status": "ACTIVE",

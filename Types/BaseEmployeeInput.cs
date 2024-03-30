@@ -11,14 +11,14 @@ namespace EmployeeGraphql.API.Types
     {
         public BaseEmployeeInput()
         {
-            Field<IntGraphType>("id");
+            Field<GuidGraphType>("id");
             Field<NonNullGraphType<StringGraphType>>("name");
             Field<NonNullGraphType<DepartmentEnumType>>("department");
             Field<NonNullGraphType<StatusEnumType>>("status");
             Field<NonNullGraphType<EmployeeEnumType>>("type");
         }
 
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public Department Department { get; set; }
         public Status Status { get; set; }
