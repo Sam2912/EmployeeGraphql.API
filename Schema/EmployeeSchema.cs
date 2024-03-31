@@ -8,8 +8,14 @@ namespace EmployeeGraphql.API.Schema
         public EmployeeSchema(IServiceProvider serviceProvider) : base(serviceProvider)
         {
             Query = serviceProvider.GetRequiredService<EmployeeQuery>();
-            Mutation = serviceProvider.GetRequiredService<EmployeeMutation>();
-            Mutation = serviceProvider.GetRequiredService<AuthorizationMutation>();
+
+            Mutation = new ObjectGraphType { Name = "Mutations" };
+
+            var employeeMutations = serviceProvider.GetRequiredService<EmployeeMutation>();
+            var authMutations = serviceProvider.GetRequiredService<AuthorizationMutation>();
+
+            Mutation.AddField(employeeMutations.GetField("addEmployee")); // Assuming GetField() returns the FieldDefinition
+            Mutation.AddField(authMutations.GetField("generateJwtToken")); // Assuming GetField() returns the FieldDefinition
         }
     }
 }

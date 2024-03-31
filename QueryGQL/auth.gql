@@ -1,0 +1,22 @@
+{
+  "input": {
+    "userName": "lax.cha",
+    "password": "Test@123",
+  "email": "lax.cha@gmail.com"
+  }
+}
+
+mutation CreateUser($input:CreateUserInput){
+  createUser(input:$input){
+    userName
+    email
+  }
+}
+
+mutation GenerateJwtToken($username: String!, $password: String!) {
+  generateJwtToken(username: $username, password: $password) {
+    token
+    success
+    errors
+  }
+}

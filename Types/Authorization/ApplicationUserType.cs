@@ -12,7 +12,7 @@ namespace EmployeeGraphql.API.Types.Authorization
         public ApplicationUserType()
         {
             Field(x => x.UserName);
-            Field(x => x.EmailConfirmed);
+            Field(x => x.Email);
         }
     }
 }

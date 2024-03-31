@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
+using EmployeeGraphql.API.Models;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -36,6 +38,7 @@ builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
@@ -52,20 +55,20 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("AdminOnly", policy => policy.RequireClaim("role", "admin"));
-    // Add more policies as needed
+   options.AddPolicy("AdminPolicy", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
+   // Add more policies as needed
 });
 
 
-builder.Services.AddSingleton<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 // Add services to the container.
-builder.Services.AddSingleton<IEmployeeResolver, EmployeeResolver>();
-builder.Services.AddSingleton<IEmployeeService, EmployeeService>();
-builder.Services.AddSingleton<EmployeeQuery>();
-builder.Services.AddSingleton<EmployeeMutation>();
-builder.Services.AddSingleton<AuthorizationMutation>();
-builder.Services.AddSingleton<ISchema, EmployeeSchema>();
+builder.Services.AddScoped<IEmployeeResolver, EmployeeResolver>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<EmployeeQuery>();
+builder.Services.AddScoped<EmployeeMutation>();
+builder.Services.AddScoped<AuthorizationMutation>();
+builder.Services.AddScoped<ISchema, EmployeeSchema>();
 builder.Services.AddAutoMapper(typeof(MappingProfile)); // Add AutoMapper
 builder.Services.AddValidatorsFromAssemblyContaining<EmployeeInputValidator>(ServiceLifetime.Singleton);
 builder.Services.AddCors(options =>
@@ -78,13 +81,18 @@ builder.Services.AddCors(options =>
                    .AllowAnyMethod();
            });
    });
+builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddGraphQL(b => b
+builder.Services.AddGraphQL(b =>
+{
+    b
     //.AddAutoSchema<EmployeeQuery>()  // schema
     .AddGraphTypes()
     // serializer
-    .AddSystemTextJson())
-    .AddAuthorization();
+    .AddSystemTextJson()
+    .AddUserContextBuilder(httpContext => new MyUserContext(httpContext))
+    .AddAuthorizationRule();
+});
 
 builder.Services.AddControllers();
 
@@ -95,26 +103,29 @@ if (app.Environment.IsDevelopment())
 {
 
     // Use GraphQL Playground
-    app.UseGraphQLPlayground();
+    // url to host GraphQL endpoint
+    app.UseGraphQLPlayground(
+        "/",                               // url to host Playground at
+        new GraphQL.Server.Ui.Playground.PlaygroundOptions
+        {
+            GraphQLEndPoint = "/graphql",         // url of GraphQL endpoint
+            SubscriptionsEndPoint = "/graphql",   // url of GraphQL endpoint
+        });
 
     // app.UseSwagger();
     // app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseCors("AllowSpecificOrigin");
-
+app.UseRouting();
+app.UseAuthentication(); // Add authentication middleware
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseGraphQL<ISchema>("/graphql");            // url to host GraphQL endpoint
-app.UseGraphQLPlayground(
-    "/",                               // url to host Playground at
-    new GraphQL.Server.Ui.Playground.PlaygroundOptions
-    {
-        GraphQLEndPoint = "/graphql",         // url of GraphQL endpoint
-        SubscriptionsEndPoint = "/graphql",   // url of GraphQL endpoint
-    });
+app.UseGraphQL<ISchema>("/graphql");
+
+
 
 app.Run();

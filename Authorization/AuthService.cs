@@ -26,18 +26,25 @@ namespace EmployeeGraphql.API.Authorization
             var user = await _userManager.FindByNameAsync(username);
             if (user != null && await _signInManager.CheckPasswordSignInAsync(user, password, false) == SignInResult.Success)
             {
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_configuration["Jwt:SecretKey"]);
+
+                var issuer = _configuration["Jwt:Issuer"];
+                var audience = _configuration["Jwt:Audience"];
+                var key = Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"]);
+
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    Subject = new ClaimsIdentity(new[]
-                    {
+                    Subject = new ClaimsIdentity(
+                    new[]{
                     new Claim(ClaimTypes.Name, username),
-                    new Claim(ClaimTypes.Role, "admin")
-                }),
+                    new Claim(ClaimTypes.Role, "Admin")
+                    }),
                     Expires = DateTime.UtcNow.AddHours(1), // Token expiration time
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                    Issuer = issuer,
+                    Audience = audience,
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
                 };
+
+                var tokenHandler = new JwtSecurityTokenHandler();
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 return tokenHandler.WriteToken(token);
             }

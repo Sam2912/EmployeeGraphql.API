@@ -28,7 +28,7 @@ namespace EmployeeGraphql.API.Mutation
                var token = await GenerateJwtToken(username, password);
 
                return token;
-           });
+           }).AllowAnonymous();
 
             Field<ApplicationUserType>(
                        "createUser").Argument<CreateUserInput>("input")

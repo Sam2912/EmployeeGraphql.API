@@ -34,7 +34,7 @@ namespace EmployeeGraphql.API
             .Resolve(context =>
             {
                 return employeeService.GetEmployees();
-            });
+            }).Authorize();
 
             Field<ListGraphType<IEmployeeType>>("employeesWithInterface")
            .Resolve(context =>
