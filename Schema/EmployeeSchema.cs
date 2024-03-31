@@ -9,6 +9,7 @@ namespace EmployeeGraphql.API.Schema
         {
             Query = serviceProvider.GetRequiredService<EmployeeQuery>();
             Mutation = serviceProvider.GetRequiredService<EmployeeMutation>();
+            Mutation = serviceProvider.GetRequiredService<AuthorizationMutation>();
         }
     }
 }

@@ -1,4 +1,3 @@
-using EmployeeGraphql.API.Models;
 using GraphQL.Types;
 
 namespace EmployeeGraphql.API.Types

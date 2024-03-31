@@ -1,9 +1,5 @@
-using AutoMapper;
-using EmployeeGraphql.API.Models;
 using EmployeeGraphql.API.Resolver;
-using EmployeeGraphql.API.Services;
 using EmployeeGraphql.API.Types;
-using GraphQL;
 using GraphQL.Types;
 
 namespace EmployeeGraphql.API.Mutation

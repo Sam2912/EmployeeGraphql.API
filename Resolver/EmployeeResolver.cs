@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using EmployeeGraphql.API.Models;
 using EmployeeGraphql.API.Services;
 using EmployeeGraphql.API.Types;
-using EmployeeGraphql.API.Validations;
 using FluentValidation;
 using FluentValidation.Results;
 using GraphQL;
