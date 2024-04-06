@@ -66,47 +66,6 @@ namespace EmployeeGraphql.API.Mutation
 
                    return result.Succeeded;
                });
-
-            Field<AuthPayload>("generateJwtToken")
-           .Arguments(new QueryArguments(
-               new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "username" },
-               new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "password" }
-           )).ResolveAsync(async context =>
-           {
-               var username = context.GetArgument<string>("username");
-               var password = context.GetArgument<string>("password");
-
-               // Your authentication logic here
-               var token = await GenerateJwtToken(username, password);
-
-               return token;
-           }).AllowAnonymous();
         }
-
-        public async Task<AuthPayloadDto> GenerateJwtToken(string username, string password)
-        {
-            var token = await _authService.GenerateJwtToken(username, password);
-            if (token != null)
-            {
-                return new AuthPayloadDto
-                {
-                    Token = token,
-                    Success = true,
-                    Errors = (List<string>)null
-                };
-            }
-            else
-            {
-                return new AuthPayloadDto
-                {
-                    Token = (string)null,
-                    Success = false,
-                    Errors = new List<string> { "Invalid username or password" }
-                };
-            }
-            // // Return null or throw an exception for invalid credentials
-            // throw new AuthenticationException("Invalid credentials");
-        }
-
     }
 }

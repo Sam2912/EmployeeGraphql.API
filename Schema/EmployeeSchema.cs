@@ -20,9 +20,7 @@ namespace EmployeeGraphql.API.Schema
             
             Mutation.AddField(authMutations.GetField("createRole")); // Assuming GetField() returns the FieldDefinition
             Mutation.AddField(authMutations.GetField("createUser")); // Assuming GetField() returns the FieldDefinition
-            Mutation.AddField(authMutations.GetField("assignRolesToUser")); // Assuming GetField() returns the FieldDefinition
-            Mutation.AddField(authMutations.GetField("generateJwtToken")); // Assuming GetField() returns the FieldDefinition
-            
+            Mutation.AddField(authMutations.GetField("assignRolesToUser")); // Assuming GetField() returns the FieldDefinition 
         }
     }
 }
