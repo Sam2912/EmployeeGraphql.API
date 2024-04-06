@@ -1,83 +1,46 @@
+using System.Linq.Expressions;
 using EmployeeGraphql.API.Models;
+using EmployeeGraphql.API.Repositories;
 
 namespace EmployeeGraphql.API.Services
 {
     public class EmployeeService : IEmployeeService
     {
-        private List<IEmployee> _employees;
+        private readonly IEmployeeRepository _employeeRepository;
 
-        public EmployeeService()
+        public EmployeeService(IEmployeeRepository employeeRepository)
         {
-            // Initialize employees (FullTimeEmployee and PartTimeEmployee instances)
-            _employees = new List<IEmployee>();
-            _employees.Add(new FullTimeEmployee
-            {
-                Id = Guid.Parse("2bcd868d-27e8-4c03-afa8-9fffd2f4b295"),
-                Name = "Laxman",
-                Salary = 5000m,
-                Department = Department.IT,
-                Status = Status.Active
-            });
-
-            _employees.Add(new PartTimeEmployee
-            {
-                Id = Guid.Parse("35d5b785-7d5b-43b6-9302-971a44dc588e"),
-                Name = "Jiya",
-                HourlyRate = 1000m,
-                Department = Department.HR,
-                Status = Status.Active
-
-
-            });
-
-            _employees.Add(new FullTimeEmployee
-            {
-                Id = Guid.Parse("7cfa39d8-16e4-485c-96c0-48ef1e6b083c"),
-                Name = "Pahal",
-                Salary = 2000m,
-                Department = Department.IT,
-                Status = Status.Inactive
-
-
-            });
+            _employeeRepository = employeeRepository;
         }
 
-        public IEnumerable<IEmployee> GetEmployeeByDeptStatus(Department dept, Status status)
+        public async Task<IEnumerable<IEmployee>> GetAllEmployeesAsync()
         {
-            return _employees.Where(x => x.Department == dept && x.Status == status);
+            return await _employeeRepository.GetAllAsync();
         }
 
-        public IEmployee? GetEmployeeById(Guid id)
+        public async Task<IEmployee> GetEmployeeByIdAsync(Guid id)
         {
-            return _employees.FirstOrDefault(x => x.Id == id);
-        }
-        public IEnumerable<IEmployee> GetEmployees()
-        {
-            return _employees;
+            return await _employeeRepository.GetByIdAsync(id);
         }
 
-        public IEmployee AddEmployee(IEmployee employee)
+        public async Task<IEnumerable<IEmployee>> GetAsync(Expression<Func<Employee, bool>> predicate)
         {
-            _employees.Add(employee);
-            return employee;
+            return await _employeeRepository.GetAsync(predicate);
         }
 
-        public IEmployee UpdateEmployee(IEmployee employee)
+        public async Task<IEmployee> AddEmployeeAsync(Employee employee)
         {
-            DeleteEmployee(employee.Id);
-            return AddEmployee(employee);
+            return await _employeeRepository.AddAsync(employee);
         }
 
-        public IEmployee? DeleteEmployee(Guid employeeId)
+        public async Task<IEmployee> UpdateEmployeeAsync(Employee employee)
         {
-            IEmployee? employee = _employees.FirstOrDefault(x => x.Id == employeeId);
-            if (employee is not null)
-            {
-                _employees.Remove(employee);
-                return employee;
-            }
-            return null;
+           return await _employeeRepository.UpdateAsync(employee);
+        }
+
+        public async Task<IEmployee> DeleteEmployeeAsync(Guid id)
+        {
+           return await _employeeRepository.DeleteAsync(id);
         }
     }
-
 }

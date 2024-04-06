@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using EmployeeGraphql.API.Authorization;
 using EmployeeGraphql.API.Constants;
 using EmployeeGraphql.API.Models;
@@ -19,35 +20,31 @@ namespace EmployeeGraphql.API
 
             Field<EmployeeUnion>("employee")
             .Argument<NonNullGraphType<GuidGraphType>>("id")
-            .Resolve(resolve: context =>
+            .ResolveAsync(resolve: async context =>
                  {
                      var id = context.GetArgument<Guid>("id");
-                     return employeeService.GetEmployeeById(id);
+                     return await employeeService.GetEmployeeByIdAsync(id);
                  });
 
 
             Field<ListGraphType<EmployeeUnion>>("filteredEmployee")
                        .Argument<DepartmentEnumType>("dept")
                        .Argument<StatusEnumType>("status")
-                       .Resolve(resolve: context =>
+                       .ResolveAsync(async context =>
                             {
                                 var dept = context.GetArgument<Department>("dept");
                                 var status = context.GetArgument<Status>("status");
-
-                                return employeeService.GetEmployeeByDeptStatus(dept, status);
+                                
+                                Expression<Func<Employee, bool>> predicate = emp => emp.Department == dept && emp.Status == status;
+                                return await employeeService.GetAsync(predicate);
                             });
 
             Field<ListGraphType<EmployeeUnion>>("employees")
-            .Resolve(context =>
-            {
-                return employeeService.GetEmployees();
-            }).AuthorizeWithPolicy(EmployeeConstant.ADMIN_POLICY);
+            .ResolveAsync(async context => await employeeService.GetAllEmployeesAsync());
+            //.AuthorizeWithPolicy(EmployeeConstant.ADMIN_POLICY);
 
             Field<ListGraphType<IEmployeeType>>("employeesWithInterface")
-           .Resolve(context =>
-            {
-                return employeeService.GetEmployees();
-            });
+           .ResolveAsync(async context => await employeeService.GetAllEmployeesAsync());
 
             Field<AuthPayload>("generateJwtToken")
             .Arguments(new QueryArguments(

@@ -29,5 +29,6 @@ namespace EmployeeGraphql.API.Models
         public string? Name { get; set; }
         public Department Department { get; set; }
         public Status Status { get; set; }
+        public abstract EmployeeTypeEnum Type { get; set; }
     }
 }

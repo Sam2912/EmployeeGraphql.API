@@ -21,10 +21,10 @@ namespace EmployeeGraphql.API.Resolver
             this.validator = validator;
         }
 
-        public async Task<IEmployee?> CreateEmployeeAsync(IResolveFieldContext<object> context)
+        public async Task<IEmployee> CreateEmployeeAsync(IResolveFieldContext<object> context)
         {
             var input = context.GetArgument<EmployeeInput>("create");
-            IEmployee employee = GetEmployee(input);
+            Employee employee = GetEmployee(input);
 
 
             ValidationResult validationResult = await this.validator.ValidateAsync(input);
@@ -38,13 +38,13 @@ namespace EmployeeGraphql.API.Resolver
                 return await Task.FromResult<IEmployee>(null);
             }
 
-            return employeeService.AddEmployee(employee);
+            return await employeeService.AddEmployeeAsync(employee);
         }
 
-        private IEmployee GetEmployee<T>(T input)
+        private Employee GetEmployee<T>(T input)
         where T : IEmployeeInput
         {
-            IEmployee employee = null;
+            Employee employee = null;
             if (input.FullTimeEmployeeInput is not null)
             {
                 employee = mapper.Map<FullTimeEmployee>(input.FullTimeEmployeeInput);
@@ -57,18 +57,18 @@ namespace EmployeeGraphql.API.Resolver
             return employee;
         }
 
-        public IEmployee? UpdateEmployee(IResolveFieldContext<object> context)
+        public async Task<IEmployee> UpdateEmployee(IResolveFieldContext<object> context)
         {
             var input = context.GetArgument<EmployeeUpdateInput>("update");
-            IEmployee employee = GetEmployee(input);
+            Employee employee = GetEmployee(input);
 
-            return employeeService.UpdateEmployee(employee);
+            return await employeeService.UpdateEmployeeAsync(employee);
         }
 
-        public IEmployee? DeleteEmployee(IResolveFieldContext<object> context)
+        public async Task<IEmployee> DeleteEmployee(IResolveFieldContext<object> context)
         {
             var delete = context.GetArgument<EmployeeDeleteInput>("delete");
-            return employeeService.DeleteEmployee(delete.EmployeeId);
+            return await employeeService.DeleteEmployeeAsync(delete.EmployeeId);
         }
 
     }

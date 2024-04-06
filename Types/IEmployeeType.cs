@@ -11,6 +11,7 @@ namespace EmployeeGraphql.API.Types
             Field(e => e.Id);
             Field(e => e.Name);
             Field(e => e.Department, type: typeof(DepartmentEnumType));
+            //Field(e=>e.Type);
             Field<StatusEnumType>("status");
         }
     }

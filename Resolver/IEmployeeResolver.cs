@@ -5,8 +5,8 @@ namespace EmployeeGraphql.API.Resolver
 {
     public interface IEmployeeResolver
     {
-        Task<IEmployee?> CreateEmployeeAsync(IResolveFieldContext<object> context);
-        IEmployee? UpdateEmployee(IResolveFieldContext<object> context);
-        IEmployee? DeleteEmployee(IResolveFieldContext<object> context);
+        Task<IEmployee> CreateEmployeeAsync(IResolveFieldContext<object> context);
+        Task<IEmployee> UpdateEmployee(IResolveFieldContext<object> context);
+        Task<IEmployee> DeleteEmployee(IResolveFieldContext<object> context);
     }
 }

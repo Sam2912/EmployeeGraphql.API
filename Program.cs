@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Identity;
 using EmployeeGraphql.API.Models;
 using System.Security.Claims;
 using EmployeeGraphql.API.Constants;
+using EmployeeGraphql.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -56,8 +57,8 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization(options =>
 {
-   options.AddPolicy(EmployeeConstant.ADMIN_POLICY, policy => policy.RequireClaim(ClaimTypes.Role, EmployeeConstant.ROLE_ADMIN));
-   // Add more policies as needed
+    options.AddPolicy(EmployeeConstant.ADMIN_POLICY, policy => policy.RequireClaim(ClaimTypes.Role, EmployeeConstant.ROLE_ADMIN));
+    // Add more policies as needed
 });
 
 
@@ -66,6 +67,10 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 // Add services to the container.
 builder.Services.AddScoped<IEmployeeResolver, EmployeeResolver>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
 builder.Services.AddScoped<EmployeeQuery>();
 builder.Services.AddScoped<EmployeeMutation>();
 builder.Services.AddScoped<AuthorizationMutation>();
