@@ -1,3 +1,15 @@
+//CreateRole
+{
+  "name":"IT"
+}
+
+mutation CreateRole($name:String!){
+  createRole(name: $name) {
+    id
+    name
+  }
+}
+
 {
   "input": {
     "userName": "lax.cha",
@@ -11,6 +23,22 @@ mutation CreateUser($input:CreateUserInput){
     userName
     email
   }
+}
+
+//AssignRolesToUser
+{
+  "userId": "59623a5a-45af-46a1-8a40-4418627fa8b7",
+  "roles": ["IT"]
+}
+mutation AssignRolesToUser($userId: String!,$roles: [String]!){
+  assignRolesToUser(userId:$userId,roles:$roles)
+}
+
+//GenerateJwtToken
+
+{
+  "username": "lax.cha29",
+  "password": "L@xm@n1987"
 }
 
 mutation GenerateJwtToken($username: String!, $password: String!) {

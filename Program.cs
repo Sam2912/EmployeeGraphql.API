@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
 using EmployeeGraphql.API.Models;
 using System.Security.Claims;
+using EmployeeGraphql.API.Constants;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -55,7 +56,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization(options =>
 {
-   options.AddPolicy("AdminPolicy", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
+   options.AddPolicy(EmployeeConstant.ADMIN_POLICY, policy => policy.RequireClaim(ClaimTypes.Role, EmployeeConstant.ROLE_ADMIN));
    // Add more policies as needed
 });
 

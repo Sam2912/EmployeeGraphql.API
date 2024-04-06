@@ -12,12 +12,15 @@ namespace EmployeeGraphql.API.Authorization
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
 
         public AuthService(IServiceProvider serviceProvider, IConfiguration configuration)
         {
             _userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
             _signInManager = serviceProvider.GetRequiredService<SignInManager<ApplicationUser>>();
+            _roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
             _configuration = configuration;
         }
 
@@ -26,6 +29,16 @@ namespace EmployeeGraphql.API.Authorization
             var user = await _userManager.FindByNameAsync(username);
             if (user != null && await _signInManager.CheckPasswordSignInAsync(user, password, false) == SignInResult.Success)
             {
+                var roles = await _userManager.GetRolesAsync(user); // Get user roles
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, username)
+                };
+
+                foreach (var role in roles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role)); // Add roles to claims
+                }
 
                 var issuer = _configuration["Jwt:Issuer"];
                 var audience = _configuration["Jwt:Audience"];
@@ -33,11 +46,7 @@ namespace EmployeeGraphql.API.Authorization
 
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    Subject = new ClaimsIdentity(
-                    new[]{
-                    new Claim(ClaimTypes.Name, username),
-                    new Claim(ClaimTypes.Role, "Admin")
-                    }),
+                    Subject = new ClaimsIdentity(claims),
                     Expires = DateTime.UtcNow.AddHours(1), // Token expiration time
                     Issuer = issuer,
                     Audience = audience,
@@ -49,6 +58,18 @@ namespace EmployeeGraphql.API.Authorization
                 return tokenHandler.WriteToken(token);
             }
             return null; // Invalid credentials
+        }
+
+        public async Task<IdentityResult> CreateRole(string roleName)
+        {
+            var roleExists = await _roleManager.RoleExistsAsync(roleName);
+            if (!roleExists)
+            {
+                var newRole = new IdentityRole(roleName);
+                return await _roleManager.CreateAsync(newRole);
+            }
+
+            throw new Exception("Role already exists.");
         }
 
         public async Task<ApplicationUser> CreateUser(CreateUserDto input)
@@ -69,5 +90,19 @@ namespace EmployeeGraphql.API.Authorization
 
             throw new Exception("Failed to create user.");
         }
+
+
+        public async Task<IdentityResult> AssignRolesToUser(string userId, IList<string> roles)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            var result = await _userManager.AddToRolesAsync(user, roles);
+            return result;
+        }
+
     }
 }

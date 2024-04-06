@@ -1,3 +1,4 @@
+using EmployeeGraphql.API.Constants;
 using EmployeeGraphql.API.Models;
 using EmployeeGraphql.API.Services;
 using EmployeeGraphql.API.Types;
@@ -34,7 +35,7 @@ namespace EmployeeGraphql.API
             .Resolve(context =>
             {
                 return employeeService.GetEmployees();
-            }).Authorize();
+            }).AuthorizeWithPolicy(EmployeeConstant.ADMIN_POLICY);
 
             Field<ListGraphType<IEmployeeType>>("employeesWithInterface")
            .Resolve(context =>

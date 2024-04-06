@@ -15,7 +15,14 @@ namespace EmployeeGraphql.API.Schema
             var authMutations = serviceProvider.GetRequiredService<AuthorizationMutation>();
 
             Mutation.AddField(employeeMutations.GetField("addEmployee")); // Assuming GetField() returns the FieldDefinition
+            Mutation.AddField(employeeMutations.GetField("updateEmployee")); // Assuming GetField() returns the FieldDefinition
+            Mutation.AddField(employeeMutations.GetField("deleteEmployee")); // Assuming GetField() returns the FieldDefinition
+            
+            Mutation.AddField(authMutations.GetField("createRole")); // Assuming GetField() returns the FieldDefinition
+            Mutation.AddField(authMutations.GetField("createUser")); // Assuming GetField() returns the FieldDefinition
+            Mutation.AddField(authMutations.GetField("assignRolesToUser")); // Assuming GetField() returns the FieldDefinition
             Mutation.AddField(authMutations.GetField("generateJwtToken")); // Assuming GetField() returns the FieldDefinition
+            
         }
     }
 }
