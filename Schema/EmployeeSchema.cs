@@ -13,7 +13,7 @@ namespace EmployeeGraphql.API.Schema
 
             var employeeMutations = serviceProvider.GetRequiredService<EmployeeMutation>();
             var authMutations = serviceProvider.GetRequiredService<AuthorizationMutation>();
-
+            
             Mutation.AddField(employeeMutations.GetField("addEmployee")); // Assuming GetField() returns the FieldDefinition
             Mutation.AddField(employeeMutations.GetField("updateEmployee")); // Assuming GetField() returns the FieldDefinition
             Mutation.AddField(employeeMutations.GetField("deleteEmployee")); // Assuming GetField() returns the FieldDefinition

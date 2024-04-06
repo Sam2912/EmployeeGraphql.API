@@ -10,7 +10,7 @@ namespace EmployeeGraphql.API.Repositories
 {
     public class EmployeeRepository : GenericRepository<Employee>, IEmployeeRepository
     {
-        public EmployeeRepository(ApplicationDbContext context) : base(context)
+        public EmployeeRepository(ApplicationDbContext context, MyUserContext myUserContext) : base(context, myUserContext)
         {
 
         }

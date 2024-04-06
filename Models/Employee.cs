@@ -30,5 +30,9 @@ namespace EmployeeGraphql.API.Models
         public Department Department { get; set; }
         public Status Status { get; set; }
         public abstract EmployeeTypeEnum Type { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string? UpdatedBy { get; set; }
+        public DateTime? UpdatedDate { get; set; }
     }
 }

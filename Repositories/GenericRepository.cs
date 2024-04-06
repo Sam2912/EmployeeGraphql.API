@@ -10,14 +10,16 @@ namespace EmployeeGraphql.API.Repositories
     using EmployeeGraphql.API.Models;
     using Microsoft.EntityFrameworkCore;
 
-    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity :class, IEntity
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IEntity
     {
         private readonly DbContext _context;
+        private readonly MyUserContext _myUserContext;
         private readonly DbSet<TEntity> _dbSet;
 
-        public GenericRepository(DbContext context)
+        public GenericRepository(DbContext context, MyUserContext myUserContext)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _myUserContext = myUserContext;
             _dbSet = _context.Set<TEntity>();
         }
 
@@ -38,17 +40,26 @@ namespace EmployeeGraphql.API.Repositories
 
         public async Task<TEntity> AddAsync(TEntity entity)
         {
+            entity.CreatedBy = _myUserContext?.User?.Identity?.Name;
+            entity.CreatedDate = DateTime.Now;
+
             _dbSet.Add(entity);
             await _context.SaveChangesAsync();
             return entity;
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity entity)   
+        public async Task<TEntity> UpdateAsync(TEntity entity)
         {
             var existingEntity = await _dbSet.FindAsync(entity.Id);
             if (existingEntity != null)
             {
                 _context.Entry(existingEntity).State = EntityState.Detached; // Detach the existing entity
+
+                entity.CreatedBy = existingEntity.CreatedBy;
+                entity.CreatedDate = existingEntity.CreatedDate;
+                entity.UpdatedBy = _myUserContext?.User?.Identity?.Name;
+                entity.UpdatedDate = DateTime.Now;
+
                 _dbSet.Update(entity); // Update the entity
                 await _context.SaveChangesAsync(); // Save changes
                 return entity;

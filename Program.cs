@@ -19,6 +19,7 @@ using EmployeeGraphql.API.Models;
 using System.Security.Claims;
 using EmployeeGraphql.API.Constants;
 using EmployeeGraphql.API.Repositories;
+using EmployeeGraphql.API.Backgroundservices;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -88,6 +89,13 @@ builder.Services.AddCors(options =>
            });
    });
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<MyUserContext>(provider =>
+{
+    var httpContextAccessor = provider.GetRequiredService<IHttpContextAccessor>();
+    var httpContext = httpContextAccessor.HttpContext;
+    // You may need to adjust this logic based on how you set up MyUserContext
+    return new MyUserContext(httpContext);
+});
 
 builder.Services.AddGraphQL(b =>
 {
@@ -96,11 +104,14 @@ builder.Services.AddGraphQL(b =>
     .AddGraphTypes()
     // serializer
     .AddSystemTextJson()
-    .AddUserContextBuilder(httpContext => new MyUserContext(httpContext))
+    //.AddUserContextBuilder(httpContext => new MyUserContext(httpContext))
     .AddAuthorizationRule();
 });
 
 builder.Services.AddControllers();
+
+// Add the background service
+//builder.Services.AddHostedService<UserManagementBackgroundService>();
 
 var app = builder.Build();
 

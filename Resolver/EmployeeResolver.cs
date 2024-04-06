@@ -41,6 +41,19 @@ namespace EmployeeGraphql.API.Resolver
             return await employeeService.AddEmployeeAsync(employee);
         }
 
+        public async Task<IEmployee> UpdateEmployeeAsync(IResolveFieldContext<object> context)
+        {
+            var input = context.GetArgument<EmployeeUpdateInput>("update");
+            Employee employee = GetEmployee(input);
+
+            return await employeeService.UpdateEmployeeAsync(employee);
+        }
+
+        public async Task<IEmployee> DeleteEmployeeAsync(IResolveFieldContext<object> context)
+        {
+            var delete = context.GetArgument<EmployeeDeleteInput>("delete");
+            return await employeeService.DeleteEmployeeAsync(delete.EmployeeId);
+        }
         private Employee GetEmployee<T>(T input)
         where T : IEmployeeInput
         {
@@ -56,20 +69,5 @@ namespace EmployeeGraphql.API.Resolver
 
             return employee;
         }
-
-        public async Task<IEmployee> UpdateEmployee(IResolveFieldContext<object> context)
-        {
-            var input = context.GetArgument<EmployeeUpdateInput>("update");
-            Employee employee = GetEmployee(input);
-
-            return await employeeService.UpdateEmployeeAsync(employee);
-        }
-
-        public async Task<IEmployee> DeleteEmployee(IResolveFieldContext<object> context)
-        {
-            var delete = context.GetArgument<EmployeeDeleteInput>("delete");
-            return await employeeService.DeleteEmployeeAsync(delete.EmployeeId);
-        }
-
     }
 }
