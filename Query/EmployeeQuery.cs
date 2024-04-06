@@ -17,6 +17,8 @@ namespace EmployeeGraphql.API
         public EmployeeQuery(IEmployeeService employeeService, IAuthService authService)
         {
             _authService = authService;
+            
+            this.Authorize();
 
             Field<EmployeeUnion>("employee")
             .Argument<NonNullGraphType<GuidGraphType>>("id")
@@ -34,14 +36,14 @@ namespace EmployeeGraphql.API
                             {
                                 var dept = context.GetArgument<Department>("dept");
                                 var status = context.GetArgument<Status>("status");
-                                
+
                                 Expression<Func<Employee, bool>> predicate = emp => emp.Department == dept && emp.Status == status;
                                 return await employeeService.GetAsync(predicate);
                             });
 
             Field<ListGraphType<EmployeeUnion>>("employees")
-            .ResolveAsync(async context => await employeeService.GetAllEmployeesAsync());
-            //.AuthorizeWithPolicy(EmployeeConstant.ADMIN_POLICY);
+            .ResolveAsync(async context => await employeeService.GetAllEmployeesAsync())
+            .AuthorizeWithPolicy(EmployeeConstant.ADMIN_POLICY);
 
             Field<ListGraphType<IEmployeeType>>("employeesWithInterface")
            .ResolveAsync(async context => await employeeService.GetAllEmployeesAsync());

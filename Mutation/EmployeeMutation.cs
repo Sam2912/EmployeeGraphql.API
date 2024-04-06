@@ -9,18 +9,23 @@ namespace EmployeeGraphql.API.Mutation
     {
         public EmployeeMutation(IEmployeeResolver employeeResolver)
         {
-            this.Authorize();
+            //Authorize not working when mutation is added like  
+            //this.Authorize();
+
             Field<IEmployeeType>("addEmployee")
             .Argument<NonNullGraphType<EmployeeInput>>("create")
-            .ResolveAsync(resolve: async context => await employeeResolver.CreateEmployeeAsync(context));
+            .ResolveAsync(resolve: async context => await employeeResolver.CreateEmployeeAsync(context))
+            .Authorize();
 
             Field<IEmployeeType>("updateEmployee")
                 .Argument<NonNullGraphType<EmployeeUpdateInput>>("update")
-                .ResolveAsync(async context => await employeeResolver.UpdateEmployeeAsync(context));
+                .ResolveAsync(async context => await employeeResolver.UpdateEmployeeAsync(context))
+                .Authorize();
 
             Field<IEmployeeType>("deleteEmployee")
                       .Argument<NonNullGraphType<EmployeeDeleteInput>>("delete")
-                      .ResolveAsync(async context => await employeeResolver.DeleteEmployeeAsync(context));
+                      .ResolveAsync(async context => await employeeResolver.DeleteEmployeeAsync(context))
+                      .Authorize();;
 
         }
     }
