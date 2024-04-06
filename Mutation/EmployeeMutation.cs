@@ -1,3 +1,4 @@
+using EmployeeGraphql.API.Constants;
 using EmployeeGraphql.API.Resolver;
 using EmployeeGraphql.API.Types;
 using GraphQL;
@@ -15,17 +16,17 @@ namespace EmployeeGraphql.API.Mutation
             Field<IEmployeeType>("addEmployee")
             .Argument<NonNullGraphType<EmployeeInput>>("create")
             .ResolveAsync(resolve: async context => await employeeResolver.CreateEmployeeAsync(context))
-            .Authorize();
+            .AuthorizeWithPolicy(EmployeeConstant.ADMIN_POLICY);
 
             Field<IEmployeeType>("updateEmployee")
                 .Argument<NonNullGraphType<EmployeeUpdateInput>>("update")
                 .ResolveAsync(async context => await employeeResolver.UpdateEmployeeAsync(context))
-                .Authorize();
+                .AuthorizeWithPolicy(EmployeeConstant.ADMIN_POLICY);
 
             Field<IEmployeeType>("deleteEmployee")
                       .Argument<NonNullGraphType<EmployeeDeleteInput>>("delete")
                       .ResolveAsync(async context => await employeeResolver.DeleteEmployeeAsync(context))
-                      .Authorize();;
+                      .AuthorizeWithPolicy(EmployeeConstant.ADMIN_POLICY);
 
         }
     }

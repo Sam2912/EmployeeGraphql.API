@@ -42,8 +42,7 @@ namespace EmployeeGraphql.API
                             });
 
             Field<ListGraphType<EmployeeUnion>>("employees")
-            .ResolveAsync(async context => await employeeService.GetAllEmployeesAsync())
-            .AuthorizeWithPolicy(EmployeeConstant.ADMIN_POLICY);
+            .ResolveAsync(async context => await employeeService.GetAllEmployeesAsync());
 
             Field<ListGraphType<IEmployeeType>>("employeesWithInterface")
            .ResolveAsync(async context => await employeeService.GetAllEmployeesAsync());
