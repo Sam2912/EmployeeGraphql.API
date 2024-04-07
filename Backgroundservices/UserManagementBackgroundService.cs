@@ -36,18 +36,19 @@ namespace EmployeeGraphql.API.Backgroundservices
                     await roleManager.CreateAsync(new IdentityRole("Admin"));
                 }
 
+                var itRoleExists = await roleManager.RoleExistsAsync("IT");
+                if (!itRoleExists)
+                {
+                    await roleManager.CreateAsync(new IdentityRole("IT"));
+                }
+
                 var userExists = await userManager.FindByNameAsync("lax.cha29");
                 if (userExists == null)
                 {
                     var adminUser = new ApplicationUser { UserName = "lax.cha29", Email = "lax.cha29@gmail.com" };
                     await userManager.CreateAsync(adminUser, "Test@123"); // Replace "Admin@123" with a secure password
                     await userManager.AddToRoleAsync(adminUser, "Admin");
-                }
-
-                var itRoleExists = await roleManager.RoleExistsAsync("IT");
-                if (!itRoleExists)
-                {
-                    await roleManager.CreateAsync(new IdentityRole("IT"));
+                    await userManager.AddToRoleAsync(adminUser, "IT");
                 }
 
                 var userExists2 = await userManager.FindByNameAsync("lax.prat");
