@@ -10,17 +10,9 @@ namespace EmployeeGraphql.API.Extensions
     using System.Security.Claims;
     using EmployeeGraphql.API.Constants;
     using EmployeeGraphql.API.DbContext;
-    using EmployeeGraphql.API.Authorization;
-    using EmployeeGraphql.API.Resolver;
-    using EmployeeGraphql.API.Services;
-    using EmployeeGraphql.API.Repositories;
-    using EmployeeGraphql.API.Mutation;
-    using GraphQL.Types;
-    using EmployeeGraphql.API.Schema;
     using EmployeeGraphql.API.Mapping;
     using FluentValidation;
     using EmployeeGraphql.API.Validations;
-    using EmployeeGraphql.API.Models;
     using GraphQL;
 
     public static class ServiceExtensions
@@ -87,34 +79,6 @@ namespace EmployeeGraphql.API.Extensions
                             .AllowAnyMethod();
                     });
             });
-        }
-
-        public static void ConfigureServices(this IServiceCollection services)
-        {
-            services.AddScoped<IAuthService, AuthService>();
-
-            // Add services to the container.
-            services.AddScoped<IEmployeeResolver, EmployeeResolver>();
-            services.AddScoped<IEmployeeService, EmployeeService>();
-
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-
-            services.AddScoped<EmployeeQuery>();
-            services.AddScoped<EmployeeMutation>();
-            services.AddScoped<AuthorizationMutation>();
-            services.AddScoped<ISchema, EmployeeSchema>();
-
-            services.AddHttpContextAccessor();
-            services.AddScoped<MyUserContext>(provider =>
-            {
-                var httpContextAccessor = provider.GetRequiredService<IHttpContextAccessor>();
-                var httpContext = httpContextAccessor.HttpContext;
-                // You may need to adjust this logic based on how you set up MyUserContext
-                return new MyUserContext(httpContext);
-            });
-
-            services.AddControllers();
         }
 
         public static void ConfigureAutoMapper(this IServiceCollection services)
