@@ -1,3 +1,9 @@
+{
+  "Accept": "application/json",
+  "Authorization": "Bearer "
+}
+
+
 query GetEmployees {
   employees {
     __typename

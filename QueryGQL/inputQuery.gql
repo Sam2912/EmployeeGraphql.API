@@ -1,4 +1,10 @@
 {
+  "Accept": "application/json",
+  "Authorization": "Bearer "
+}
+
+
+{
   "create": {
     "partTimeEmployeeInput": {
     "id":"5b9fe307-cbef-469e-8f85-193eb596e0fa",

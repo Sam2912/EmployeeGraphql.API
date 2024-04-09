@@ -1,4 +1,9 @@
 {
+  "Accept": "application/json",
+  "Authorization": "Bearer "
+}
+
+{
   "update": {
     "fullTimeEmployeeInput": {
         "id": "2bcd868d-27e8-4c03-afa8-9fffd2f4b295",
