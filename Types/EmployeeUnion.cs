@@ -1,14 +1,12 @@
-using GraphQL.Types;
-
 namespace EmployeeGraphql.API.Types
 {
-    public class EmployeeUnion : UnionGraphType
+    public class EmployeeUnion : UnionType
     {
-        public EmployeeUnion()
+        protected override void Configure(IUnionTypeDescriptor descriptor)
         {
-            Name = "Employee";
-            Type<FullTimeEmployeeType>();
-            Type<PartTimeEmployeeType>();
+            descriptor.Name("EmployeeUnion")
+                        .Type<PartTimeEmployeeType>()
+                        .Type<FullTimeEmployeeType>();
         }
     }
 }

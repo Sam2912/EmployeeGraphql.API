@@ -1,4 +1,3 @@
-using GraphQL.Types;
 using EmployeeGraphql.API.Extensions;
 using Autofac.Extensions.DependencyInjection;
 using Autofac;
@@ -39,8 +38,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseGraphQL<ISchema>("/graphql");
-
-
+app.MapGraphQL();
 
 app.Run();

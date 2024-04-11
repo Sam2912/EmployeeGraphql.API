@@ -1,20 +1,18 @@
 using EmployeeGraphql.API.Models;
-using GraphQL.Types;
 
 namespace EmployeeGraphql.API.Types
 {
-    public class FullTimeEmployeeType : ObjectGraphType<FullTimeEmployee>
+    public class FullTimeEmployeeType : ObjectType<FullTimeEmployee>
     {
-        public FullTimeEmployeeType()
+        protected override void Configure(IObjectTypeDescriptor<FullTimeEmployee> descriptor)
         {
-            Field(e => e.Id);
-            Field(e => e.Name);
-            Field(e => e.Salary);
-            Field(e => e.Department, type: typeof(DepartmentEnumType));
-            Field<StatusEnumType>("status")
-            .Resolve( context => context.Source.Status);
-            Field(e=>e.Type);
-            Interface<IEmployeeType>();
+            descriptor.Field(e => e.Id).Type<NonNullType<IdType>>().Name("id");
+            descriptor.Field(e => e.Name).Type<StringType>().Name("name");
+            descriptor.Field(e => e.Department).Name("department");
+            descriptor.Field(e => e.Status).Name("status");
+            descriptor.Field(e => e.Type).Name("type");
+            descriptor.Field(e => e.Salary).Type<DecimalType>().Name("salary");
+            descriptor.Implements<IEmployeeType>();
         }
     }
 

@@ -1,18 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using EmployeeGraphql.API.DbContext;
+using Microsoft.AspNetCore.Identity;
 
 namespace EmployeeGraphql.API.Backgroundservices
 {
-    using EmployeeGraphql.API.DbContext;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-    using System;
-    using System.Threading;
-    using System.Threading.Tasks;
-
     public class UserManagementBackgroundService : BackgroundService
     {
         private readonly IServiceProvider _serviceProvider;

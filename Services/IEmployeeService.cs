@@ -7,9 +7,9 @@ namespace EmployeeGraphql.API.Services
     {
         Task<IEnumerable<IEmployee>> GetAllEmployeesAsync();
         Task<IEmployee> GetEmployeeByIdAsync(Guid id);
-        Task<IEnumerable<IEmployee>> GetAsync(Expression<Func<Employee, bool>> predicate);
-        Task<IEmployee> AddEmployeeAsync(Employee employee);
-        Task<IEmployee> UpdateEmployeeAsync(Employee employee);
+        Task<IEnumerable<IEmployee>> GetAsync(Expression<Func<BaseEmployee, bool>> predicate);
+        Task<IEmployee> AddEmployeeAsync(BaseEmployee employee);
+        Task<IEmployee> UpdateEmployeeAsync(BaseEmployee employee);
         Task<IEmployee> DeleteEmployeeAsync(Guid id);
 
     }

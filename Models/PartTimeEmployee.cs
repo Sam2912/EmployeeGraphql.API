@@ -1,8 +1,8 @@
 namespace EmployeeGraphql.API.Models
 {
-    public class PartTimeEmployee : Employee
+    public class PartTimeEmployee : BaseEmployee
     {
-        public override EmployeeTypeEnum Type { get; set; } = EmployeeTypeEnum.PartTime;
+        public override Employee Type { get; set; } = Employee.PartTime;
         public decimal HourlyRate { get; set; }
     }
 }

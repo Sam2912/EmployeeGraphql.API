@@ -1,16 +1,12 @@
+using System.Reflection;
+using Autofac;
+using EmployeeGraphql.API.Authorization;
+using EmployeeGraphql.API.Models;
+using EmployeeGraphql.API.Query;
+using EmployeeGraphql.API.Repositories;
+
 namespace EmployeeGraphql.API.Modules
 {
-    using System.Reflection;
-    using Autofac;
-    using EmployeeGraphql.API.Authorization;
-    using EmployeeGraphql.API.Models;
-    using EmployeeGraphql.API.Mutation;
-    using EmployeeGraphql.API.Repositories;
-    using EmployeeGraphql.API.Resolver;
-    using EmployeeGraphql.API.Schema;
-    using EmployeeGraphql.API.Services;
-    using GraphQL.Types;
-
     public class AutofacModule : Autofac.Module
     {
         protected override void Load(ContainerBuilder builder)
@@ -19,15 +15,10 @@ namespace EmployeeGraphql.API.Modules
             builder.RegisterType<AuthService>().As<IAuthService>().InstancePerLifetimeScope();
 
             // Add services to the container.
-            builder.RegisterType<EmployeeResolver>().As<IEmployeeResolver>().InstancePerLifetimeScope();
             //builder.RegisterType<EmployeeService>().As<IEmployeeService>().InstancePerLifetimeScope();
             builder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IGenericRepository<>)).InstancePerLifetimeScope();
             builder.RegisterType<EmployeeRepository>().As<IEmployeeRepository>().InstancePerLifetimeScope();
-
-            builder.RegisterType<EmployeeQuery>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<EmployeeMutation>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<AuthorizationMutation>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<EmployeeSchema>().As<ISchema>().InstancePerLifetimeScope();
+            builder.RegisterType<EmployeeQueryResolver>().As<IEmployeeQueryResolver>().InstancePerLifetimeScope();
             builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
             builder.RegisterType<MyUserContext>().AsSelf().InstancePerLifetimeScope();
 

@@ -6,7 +6,7 @@ namespace EmployeeGraphql.API.Models
         public string? Name { get; set; }
         public Department Department { get; set; }
         public Status Status { get; set; }
-        public EmployeeTypeEnum Type { get; set; }
+        public Employee Type { get; set; }
         public decimal? Salary { get; set; }
         public decimal? HourlyRate { get; set; }
     }

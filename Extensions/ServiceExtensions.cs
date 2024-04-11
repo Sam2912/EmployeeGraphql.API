@@ -1,20 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Identity;
+using System.Text;
+using System.Security.Claims;
+using EmployeeGraphql.API.Constants;
+using EmployeeGraphql.API.DbContext;
+using EmployeeGraphql.API.Mapping;
+using EmployeeGraphql.API.Query;
+
 namespace EmployeeGraphql.API.Extensions
 {
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.AspNetCore.Authentication.JwtBearer;
-    using Microsoft.IdentityModel.Tokens;
-    using Microsoft.AspNetCore.Identity;
-    using System.Text;
-    using System.Security.Claims;
-    using EmployeeGraphql.API.Constants;
-    using EmployeeGraphql.API.DbContext;
-    using EmployeeGraphql.API.Mapping;
-    using FluentValidation;
-    using EmployeeGraphql.API.Validations;
-    using GraphQL;
-
     public static class ServiceExtensions
     {
         public static void ConfigureDbContext(this IServiceCollection services, IConfiguration configuration)
@@ -88,23 +84,14 @@ namespace EmployeeGraphql.API.Extensions
 
         public static void ConfigureFluentValidation(this IServiceCollection services)
         {
-            services.AddValidatorsFromAssemblyContaining<EmployeeInputValidator>(ServiceLifetime.Singleton);
+           // services.AddValidatorsFromAssemblyContaining<EmployeeInputValidator>(ServiceLifetime.Singleton);
         }
 
         public static void ConfigureGraphQL(this IServiceCollection services)
         {
-            services.AddGraphQL(b =>
-            {
-                b
-                //.AddAutoSchema<EmployeeQuery>()  // schema
-                .AddGraphTypes()
-                // serializer
-                .AddSystemTextJson()
-                //.AddUserContextBuilder(httpContext => new MyUserContext(httpContext))
-                .AddAuthorizationRule();
-            });
-
-
+            services.AddGraphQLServer()
+            .AddQueryType<EmployeeQueryType>()
+            .AddAuthorization();
         }
 
         public static void ConfigureBackgroundService(this IServiceCollection services)

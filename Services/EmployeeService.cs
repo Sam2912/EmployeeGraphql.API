@@ -23,17 +23,17 @@ namespace EmployeeGraphql.API.Services
             return await _employeeRepository.GetByIdAsync(id);
         }
 
-        public async Task<IEnumerable<IEmployee>> GetAsync(Expression<Func<Employee, bool>> predicate)
+        public async Task<IEnumerable<IEmployee>> GetAsync(Expression<Func<BaseEmployee, bool>> predicate)
         {
             return await _employeeRepository.GetAsync(predicate);
         }
 
-        public async Task<IEmployee> AddEmployeeAsync(Employee employee)
+        public async Task<IEmployee> AddEmployeeAsync(BaseEmployee employee)
         {
             return await _employeeRepository.AddAsync(employee);
         }
 
-        public async Task<IEmployee> UpdateEmployeeAsync(Employee employee)
+        public async Task<IEmployee> UpdateEmployeeAsync(BaseEmployee employee)
         {
            return await _employeeRepository.UpdateAsync(employee);
         }

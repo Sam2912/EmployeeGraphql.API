@@ -11,17 +11,17 @@ namespace EmployeeGraphql.API.DbContext
         {
         }
 
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<BaseEmployee> Employees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Employee>()
+            modelBuilder.Entity<BaseEmployee>()
                 .ToTable("Employees")
                 .HasDiscriminator(e => e.Type)
-                .HasValue<FullTimeEmployee>(EmployeeTypeEnum.FullTime)
-                .HasValue<PartTimeEmployee>(EmployeeTypeEnum.PartTime);
+                .HasValue<FullTimeEmployee>(Employee.FullTime)
+                .HasValue<PartTimeEmployee>(Employee.PartTime);
         }
     }
 }

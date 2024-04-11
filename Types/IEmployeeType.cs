@@ -1,18 +1,18 @@
 using EmployeeGraphql.API.Models;
-using GraphQL.Types;
 
 namespace EmployeeGraphql.API.Types
 {
-    public class IEmployeeType : InterfaceGraphType<IEmployee>
+    public class IEmployeeType : InterfaceType<IEmployee>
     {
-        public IEmployeeType()
+        protected override void Configure(IInterfaceTypeDescriptor<IEmployee> descriptor)
         {
-            Name = "IEmployee";
-            Field(e => e.Id);
-            Field(e => e.Name);
-            Field(e => e.Department, type: typeof(DepartmentEnumType));
-            //Field(e=>e.Type);
-            Field<StatusEnumType>("status");
+            descriptor.BindFieldsExplicitly();
+            descriptor.Name("IEmployee");
+            descriptor.Field(e => e.Id).Type<NonNullType<IdType>>().Name("id");
+            descriptor.Field(e => e.Name).Type<StringType>().Name("name");
+            descriptor.Field(e => e.Department).Name("department");
+            descriptor.Field(e => e.Status).Name("status");
+            descriptor.Field(e => e.Type).Name("type");
         }
     }
 }

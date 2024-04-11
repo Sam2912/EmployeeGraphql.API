@@ -1,16 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Reflection.Metadata;
 
 namespace EmployeeGraphql.API.Constants
 {
-    public static class EmployeeConstant
+    public  class EmployeeConstant
     {
-        public static string ADMIN_POLICY="AdminPolicy";
+        public const  string ADMIN_POLICY="AdminPolicy";
 
         //Roles
-         public static string ROLE_ADMIN="Admin";
+         public  const string ROLE_ADMIN="Admin";
         
     }
 }

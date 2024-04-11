@@ -1,27 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace EmployeeGraphql.API.Types.Authorization
 {
     using EmployeeGraphql.API.Models;
-    using GraphQL.Types;
 
-    public class AuthPayload : ObjectGraphType<AuthPayloadDto>
+    public class AuthPayload : ObjectType<AuthPayloadDto>
     {
-        public AuthPayload()
+        protected override void Configure(IObjectTypeDescriptor<AuthPayloadDto> descriptor)
         {
-            Name = "AuthPayload";
+                        descriptor.Field(e => e.Token).Name("token");
+                        descriptor.Field(e => e.Success).Name("success");
+                        descriptor.Field(e => e.Errors).Name("errors");
 
-            Field<StringGraphType>("token", resolve: context => context.Source.Token);
-            Field<BooleanGraphType>("success", resolve: context => context.Source.Success);
-            Field<ListGraphType<StringGraphType>>("errors", resolve: context => context.Source.Errors);
         }
-
-        public string Token { get; set; }
-        public bool Success { get; set; }
-        public List<string> Errors { get; set; }
     }
 
 }

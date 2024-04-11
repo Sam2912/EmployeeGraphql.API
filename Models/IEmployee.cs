@@ -5,6 +5,6 @@ namespace EmployeeGraphql.API.Models
         string? Name { get; set; }
         Department Department { get; set; }
         Status Status { get; set; }
-        EmployeeTypeEnum Type { get; set; }
+        Employee Type { get; set; }
     }
 }
