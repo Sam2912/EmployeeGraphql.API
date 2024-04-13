@@ -7,7 +7,7 @@ using System.Security.Claims;
 using EmployeeGraphql.API.Constants;
 using EmployeeGraphql.API.DbContext;
 using EmployeeGraphql.API.Mapping;
-using EmployeeGraphql.API.Query;
+using EmployeeGraphql.API.Mutation;
 
 namespace EmployeeGraphql.API.Extensions
 {
@@ -91,6 +91,8 @@ namespace EmployeeGraphql.API.Extensions
         {
             services.AddGraphQLServer()
             .AddQueryType<EmployeeQueryType>()
+            .AddMutationType<EmployeeMutationType>()
+
             .AddAuthorization();
         }
 

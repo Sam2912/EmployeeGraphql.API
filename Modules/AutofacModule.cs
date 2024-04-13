@@ -2,6 +2,7 @@ using System.Reflection;
 using Autofac;
 using EmployeeGraphql.API.Authorization;
 using EmployeeGraphql.API.Models;
+using EmployeeGraphql.API.Mutation;
 using EmployeeGraphql.API.Query;
 using EmployeeGraphql.API.Repositories;
 
@@ -19,6 +20,7 @@ namespace EmployeeGraphql.API.Modules
             builder.RegisterGeneric(typeof(GenericRepository<>)).As(typeof(IGenericRepository<>)).InstancePerLifetimeScope();
             builder.RegisterType<EmployeeRepository>().As<IEmployeeRepository>().InstancePerLifetimeScope();
             builder.RegisterType<EmployeeQueryResolver>().As<IEmployeeQueryResolver>().InstancePerLifetimeScope();
+            builder.RegisterType<EmployeeMutationResolver>().As<IEmployeeMutationResolver>().InstancePerLifetimeScope();
             builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
             builder.RegisterType<MyUserContext>().AsSelf().InstancePerLifetimeScope();
 
