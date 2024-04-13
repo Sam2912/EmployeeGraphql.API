@@ -9,9 +9,8 @@ namespace EmployeeGraphql.API.Types.Input
     {
         protected override void Configure(IInputObjectTypeDescriptor<EmployeeInput> descriptor)
         {
-            descriptor.Field(f => f.FullTimeEmployeeType).Type<FullTimeEmployeeInputType>();
-            descriptor.Field(f => f.PartTimeEmployeeType).Type<PartTimeEmployeeInputType>();
-
+            descriptor.Field(f => f.FullTimeEmployeeInput).Type<FullTimeEmployeeInputType>();
+            descriptor.Field(f => f.PartTimeEmployeeInput).Type<PartTimeEmployeeInputType>();
         }
     }
 }

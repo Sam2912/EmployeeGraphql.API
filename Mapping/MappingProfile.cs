@@ -1,4 +1,6 @@
 using AutoMapper;
+using EmployeeGraphql.API.Models;
+using EmployeeGraphql.API.Types.Input;
 
 namespace EmployeeGraphql.API.Mapping
 {
@@ -6,10 +8,11 @@ namespace EmployeeGraphql.API.Mapping
     {
         public MappingProfile()
         {
-            // CreateMap<FullTimeEmployeeInput, FullTimeEmployee>();
-            // CreateMap<PartTimeEmployeeInput, PartTimeEmployee>();
+            CreateMap<FullTimeEmployeeInput, FullTimeEmployee>()
+                    .ForMember(dest => dest.Type, opt => opt.Ignore());
 
-            
+            CreateMap<PartTimeEmployeeInput, PartTimeEmployee>()
+                    .ForMember(dest => dest.Type, opt => opt.Ignore());
         }
     }
 }

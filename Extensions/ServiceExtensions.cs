@@ -8,6 +8,8 @@ using EmployeeGraphql.API.Constants;
 using EmployeeGraphql.API.DbContext;
 using EmployeeGraphql.API.Mapping;
 using EmployeeGraphql.API.Mutation;
+using EmployeeGraphql.API.Validations;
+using FluentValidation;
 
 namespace EmployeeGraphql.API.Extensions
 {
@@ -84,7 +86,7 @@ namespace EmployeeGraphql.API.Extensions
 
         public static void ConfigureFluentValidation(this IServiceCollection services)
         {
-           // services.AddValidatorsFromAssemblyContaining<EmployeeInputValidator>(ServiceLifetime.Singleton);
+            services.AddValidatorsFromAssemblyContaining<EmployeeInputValidator>(ServiceLifetime.Scoped);
         }
 
         public static void ConfigureGraphQL(this IServiceCollection services)

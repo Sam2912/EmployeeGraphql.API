@@ -10,8 +10,8 @@ namespace EmployeeGraphql.API.Types.Input
     {
         protected override void Configure(IInputObjectTypeDescriptor<PartTimeEmployeeInput> descriptor)
         {
-            //base.Configure(descriptor);
-            descriptor.Field(f => f.HourlyRate).Type<FloatType>();
+            base.Configure(descriptor);
+            descriptor.Field(f => f.HourlyRate).Type<FloatType>().Description("Employee HourlyRate");
         }
     }
 }

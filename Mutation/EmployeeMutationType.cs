@@ -8,9 +8,9 @@ namespace EmployeeGraphql.API.Mutation
 
         protected override void Configure(IObjectTypeDescriptor<IEmployeeMutationResolver> descriptor)
         {
-             descriptor.Name(OperationTypeNames.Mutation);
+            descriptor.Name(OperationTypeNames.Mutation);
 
-            descriptor.Field(f => f.CreateEmployeeAsync(default))
+            descriptor.Field(f => f.CreateEmployeeAsync(default, default))
                 .Name("addEmployee")
                 .Type<IEmployeeType>()
                 .Argument("create", a => a.Type<EmployeeInputType>());

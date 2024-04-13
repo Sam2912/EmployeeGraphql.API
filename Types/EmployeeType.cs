@@ -6,7 +6,7 @@ namespace EmployeeGraphql.API.Types
     {
         protected override void Configure(IEnumTypeDescriptor<Employee> descriptor)
         {
-            descriptor.Name("type")
+            descriptor.Name("Type")
                     .Description("Employee Type");
         }
     }

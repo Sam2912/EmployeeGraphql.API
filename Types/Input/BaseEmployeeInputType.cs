@@ -10,11 +10,11 @@ namespace EmployeeGraphql.API.Types.Input
     {
         protected override void Configure(IInputObjectTypeDescriptor<T> descriptor)
         {
-            descriptor.Field(f=>f.Id).Type<IdType>();
-            descriptor.Field(f=>f.Name).Type<StringType>();
-            descriptor.Field(f=>f.Department).Type<DepartmentType>();
-            descriptor.Field(f=>f.Status).Type<StatusType>();
-            descriptor.Field(f=>f.Type).Type<EmployeeType>();
+            descriptor.Field(f=>f.Id).Type<IdType>().Description("Employee Id");
+            descriptor.Field(f=>f.Name).Type<StringType>().Description("Employee Name");
+            descriptor.Field(f=>f.Department).Type<DepartmentType>().Description("Employee Department");
+            descriptor.Field(f=>f.Status).Type<StatusType>().Description("Employee Status");
+            descriptor.Field(f=>f.Type).Type<EmployeeType>().Description("Employee Type");
         }
     }
 }

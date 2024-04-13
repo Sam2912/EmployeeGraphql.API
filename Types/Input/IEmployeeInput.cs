@@ -7,7 +7,7 @@ namespace EmployeeGraphql.API.Types.Input
 {
     public interface IEmployeeInput
     {
-        public PartTimeEmployeeInputType PartTimeEmployeeInput { get; set; }
-        public FullTimeEmployeeInputType FullTimeEmployeeInput { get; set; }
+        public PartTimeEmployeeInput? PartTimeEmployeeInput { get; set; }
+        public FullTimeEmployeeInput? FullTimeEmployeeInput { get; set; }
     }
 }

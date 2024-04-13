@@ -6,9 +6,9 @@ using EmployeeGraphql.API.Models;
 
 namespace EmployeeGraphql.API.Types.Input
 {
-    public class EmployeeInput
+    public class EmployeeInput : IEmployeeInput
     {
-        public PartTimeEmployeeInput PartTimeEmployeeType { get; set; }
-        public FullTimeEmployeeInput FullTimeEmployeeType { get; set; }
+        public PartTimeEmployeeInput? PartTimeEmployeeInput { get; set; }
+        public FullTimeEmployeeInput? FullTimeEmployeeInput { get; set; }
     }
 }
